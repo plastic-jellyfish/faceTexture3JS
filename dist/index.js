@@ -8,16 +8,35 @@ const scene = new THREE.Scene()
 
 // Objects
 const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
+const particlesGeometry = new THREE.BufferGeometry;
+const particlescount = 5000;
+
+const posArray = new Float32Array(particlescount * 3)
+
+for(let i=0; i < particlescount*3 ; i++){
+    // posArray[i] = (Math.random() - .5) *5
+    posArray[i] = (Math.random() - .5) * (Math.random() * 5)
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray,3))
 
 // Materials
-const material = new THREE.MeshStandardMaterial({
-    color: 0xff0055
+
+const material = new THREE.PointsMaterial({
+    size: .005
+})
+
+const particlesMaterial = new THREE.PointsMaterial({
+    size: .005,
+    transparent: true,
+    color: 'red',
+    blending: THREE.AdditiveBlending
 })
 
 // Mesh
-const sphere = new THREE.Mesh(geometry,material)
-scene.add(sphere)
-
+const sphere = new THREE.Points(geometry,material)
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial)
+scene.add(sphere, particlesMesh)
 
 
 // Lights
@@ -80,6 +99,14 @@ renderer.setClearColor(new THREE.Color('#212aff'), 1)
  * Animate
  */
 
+ document.addEventListener('mousemove', particleAnimate)
+ let mouseX = 0
+ let mouseY = 0
+ 
+ function particleAnimate(event){
+     mouseX = event.clientX
+     mouseY = event.clientY
+ }
 
 const clock = new THREE.Clock()
 
@@ -90,8 +117,15 @@ const tick = () =>
     // Update objects
     sphere.rotation.y = .5 * elapsedTime
     sphere.rotation.x = .3 * elapsedTime
-    // particlesMesh.rotation.z = elapsedTime * -.1
+    particlesMesh.rotation.z = elapsedTime * -.1
     // particlesMesh.position.z = elapsedTime * .01
+    
+    if(mouseX > 0){
+        particlesMesh.rotation.x = -mouseY * elapsedTime *.0001
+        particlesMesh.rotation.y = -mouseX * elapsedTime *.0001
+        // particlesMesh.rotation.z = -mouseX * elapsedTime *.0001
+        // particlesMesh.position.z =  mouseX * elapsedTime *.00005
+    }
 
     // Update Orbital Controls
     // controls.update()
