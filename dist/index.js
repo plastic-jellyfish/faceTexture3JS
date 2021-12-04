@@ -11,7 +11,7 @@ const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
 
 // Materials
 const material = new THREE.MeshStandardMaterial({
-    color: 0xff0000
+    color: 0xff0055
 })
 
 // Mesh
@@ -22,7 +22,7 @@ scene.add(sphere)
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 0.1)
+const pointLight = new THREE.PointLight(0xffffff, 1)
 pointLight.position.x = 2
 pointLight.position.y = 3
 pointLight.position.z = 4
@@ -73,7 +73,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor(new THREE.Color('#21282a'), 1)
+renderer.setClearColor(new THREE.Color('#212aff'), 1)
 
 
 /**
