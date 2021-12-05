@@ -98,7 +98,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor(new THREE.Color('#212aff'), 1)
+renderer.setClearColor(new THREE.Color('#000000'), 1)
 
 
 /**
