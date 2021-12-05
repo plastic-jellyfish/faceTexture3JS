@@ -1,4 +1,9 @@
 import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js'
+import { OrbitControls } from 'https://cdn.skypack.dev/@three-ts/orbit-controls'
+
+//loader
+const loader = new THREE.TextureLoader()
+const cross = loader.load('texture/cross.png')
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -27,6 +32,7 @@ const material = new THREE.PointsMaterial({
 })
 
 const particlesMaterial = new THREE.PointsMaterial({
+    map: cross,
     size: .005,
     transparent: true,
     color: 'red',
@@ -81,8 +87,8 @@ camera.position.z = 2
 scene.add(camera)
 
 // Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableDamping = true
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
 
 /**
  * Renderer
@@ -128,7 +134,7 @@ const tick = () =>
     }
 
     // Update Orbital Controls
-    // controls.update()
+    controls.update()
 
     // Render
     renderer.render(scene, camera)
