@@ -19,7 +19,7 @@ const scene = new THREE.Scene()
 
 // Objects
 const geometry = new THREE.BoxGeometry( 2,2,2 );
-const torus = new THREE.TorusKnotGeometry( .5, .15, 100, 16 )
+const torus = new THREE.TorusKnotGeometry( .4, .07, 100, 16 )
 const particlesGeometry = new THREE.BufferGeometry;
 const particlescount = 5000;
 
@@ -78,7 +78,7 @@ line.material.transparent = true;
 
 scene.add( line );
 
-line.position.y =1.5
+line.position.y =1.25    
 line.rotation.x =90
 
 // Mesh
@@ -103,6 +103,7 @@ fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
     }
 
     scene.add(mesh)
+
     // camera.position.z = 3
 })
 
@@ -111,22 +112,16 @@ fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
 
 // Lights
 
-// const pointLight = new THREE.PointLight(0xff0000, 3)
-// pointLight.position.x = 2
-// pointLight.position.y = 10
-// pointLight.position.z = 4
-// scene.add(pointLight)
-
-        const light1 = new THREE.PointLight(0xff0000,10);
+        const light1 = new THREE.PointLight(0x00ff00,10);
         light1.position.set(0,300,500);
         scene.add(light1);
-        const light2 = new THREE.PointLight(0xff0000,10);
+        const light2 = new THREE.PointLight(0x0000ff,10);
         light2.position.set(500,100,0);
         scene.add(light2);
         const light3 = new THREE.PointLight(0x00ff00,10);
         light3.position.set(0,100,-500);
         scene.add(light3);
-        const light4 = new THREE.PointLight(0x00ff00,10);
+        const light4 = new THREE.PointLight(0xff0000,10);
         light4.position.set(-500,300,500);
         scene.add(light4);
 
