@@ -26,15 +26,15 @@ body
     left: 0;
     z-index: 1;
     color: white;
-    margin: 16em 8em;
+    margin: 4em 2em;
 }
 
 h1{
-    font-size: 4rem;
+    font-size: 2rem;
 }
 
 p{
-    font-size: 1.3rem;
+    font-size: 1rem;
     width: 55%;
     color: rgb(107,107,122);
 }
