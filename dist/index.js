@@ -1,15 +1,10 @@
 import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js'
 import { OrbitControls } from 'https://cdn.skypack.dev/@three-ts/orbit-controls'
-// import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js";
-// import './style.css'
 
 //loader
 const loader = new THREE.TextureLoader()
 const cross = loader.load('texture/cross.png')
-// const texture = loader.load('texture/facetexture.jpg')
-// const height = loader.load('texture/faceheight1.png')
-// const alpha = loader.load('texture/alpha.png')
-// const gltfLoader = new GLTFLoader();
+const slash = loader.load('texture/equal.png')
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -21,40 +16,26 @@ const scene = new THREE.Scene()
 const geometry = new THREE.BoxGeometry( 2,2,2 );
 const torus = new THREE.TorusKnotGeometry( .4, .07, 100, 16 )
 const particlesGeometry = new THREE.BufferGeometry;
-const particlescount = 5000;
+const particlesGeometry1 = new THREE.BufferGeometry;
+const particlescount = 2000;
 
 const posArray = new Float32Array(particlescount * 3)
+const posArray1 = new Float32Array(particlescount * 3)
 
 for(let i=0; i < particlescount*3 ; i++){
     // posArray[i] = (Math.random() - .5) *5
     posArray[i] = (Math.random() - .5) * (Math.random() * 5)
 }
 
+for(let i=0; i < particlescount*3 ; i++){
+    // posArray[i] = (Math.random() - .5) *5
+    posArray1[i] = (Math.random() - .5) * (Math.random() * 5)
+}
+
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray,3))
 
+particlesGeometry1.setAttribute('position', new THREE.BufferAttribute(posArray1,3))
 // Materials
-
-// const material = new THREE.LineDashedMaterial( {
-// 	color: 0xffffff,
-// 	linewidth: .5,
-// 	scale: 1,
-// 	dashSize: 3,
-// 	gapSize: 5, 
-// } );
-
-// const edges = new THREE.EdgesGeometry( geometry );
-// const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
-// scene.add( line );
-
-// const material = new THREE.MeshStandardMaterial({
-//     color: 'gray',
-//     map: texture,
-//     displacementMap: height,
-//     displacementScale: .2,
-//     alphaMap: alpha,
-//     transparent: true,
-//     depthTest: false
-// })
 
 const material = new THREE.MeshPhongMaterial({
     wireframe:true,
@@ -65,10 +46,15 @@ const particlesMaterial = new THREE.PointsMaterial({
     map: cross,
     size: .01,
     transparent: true,
-    color: 'pink',
-    // blending: THREE.AdditiveBlending
+    color: 'pink'
 })
 
+const particlesMaterial1 = new THREE.PointsMaterial({
+    map: slash,
+    size: .01,
+    transparent: true,
+    color: 'pink'
+})
 const wireframe = new THREE.WireframeGeometry( torus );
 
 const line = new THREE.LineSegments( wireframe );
@@ -86,8 +72,9 @@ line.rotation.x =90
 const box = new THREE.Mesh(geometry,material)
 // const plane = new THREE.Mesh(geometry,material)
 const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial)
+const particlesMesh1 = new THREE.Points(particlesGeometry1, particlesMaterial1)
 // scene.add(plane)
-scene.add(box, particlesMesh)
+scene.add(box, particlesMesh,particlesMesh1)
 
 fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
     let geometry = new THREE.BoxGeometry(0.005, 0.005, 0.005)
@@ -192,6 +179,10 @@ renderer.setClearColor(new THREE.Color('#000000'), 1)
 
 const clock = new THREE.Clock()
 
+
+
+  
+
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
@@ -200,20 +191,24 @@ const tick = () =>
     box.rotation.y = .5 * elapsedTime
     box.rotation.x = .3 * elapsedTime
     line.rotation.z = .5 * elapsedTime
-    // plane.material.displacementScale = .2 + mouseY * .003
-    // plane.rotation.y = mouseY * -.0001
     
-
     particlesMesh.rotation.z = elapsedTime * -.1
     particlesMesh.rotation.y = elapsedTime * -.1
     particlesMesh.position.z = 1
+
+    particlesMesh1.rotation.z = elapsedTime * .1
+    particlesMesh1.rotation.y = elapsedTime * .1
+    particlesMesh1.position.z = 1
     // particlesMesh.position.z = elapsedTime * -.01
     
-    // mesh.rotation.y = elapsedTime * .1
     if(mouseX > 0){
         particlesMesh.rotation.x = -mouseY * elapsedTime *.0001
         particlesMesh.rotation.y = -mouseX * elapsedTime *.0001
         particlesMesh.rotation.z = -mouseX * elapsedTime *.0001
+
+        particlesMesh1.rotation.x = -mouseY * elapsedTime *.0001
+        particlesMesh1.rotation.y = -mouseX * elapsedTime *.0001
+        particlesMesh1.rotation.z = -mouseX * elapsedTime *.0001
         // particlesMesh.position.z =  mouseX * elapsedTime *.00005
     }
 
@@ -222,6 +217,16 @@ const tick = () =>
 
     // Render
     renderer.render(scene, camera)
+
+    // Date Time
+    var today = new Date();
+    var day = today.getDay();
+    var daylist = ["Sunday","Monday","Tuesday","Wednesday ","Thursday","Friday","Saturday"];
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' | '+time;
+   
+    document.getElementById("displayDateTime").innerHTML = dateTime;
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
