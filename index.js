@@ -225,10 +225,10 @@ const tick = () =>
     var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' | '+time;
-   
+    
     document.getElementById("displayDateTime").innerHTML = dateTime;
 
-    // Call tick again on the next frame
+     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
 
