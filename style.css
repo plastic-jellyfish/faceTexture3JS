@@ -8,7 +8,7 @@ html,
 body
 {
     height: 100vh;
-    font-family: 'Poppins';
+    font-family: 'Consolas';
     background: rgb(27,27,31);
 }
 
@@ -20,6 +20,9 @@ body
     outline: none;
 }
 
+#play{
+    text-align: center;
+}
 .parent{
 display: grid;
 grid-template-columns: 30vw 40vw 30vw;
@@ -59,7 +62,7 @@ align-items: center; */
      /* align-self: center; */
     justify-self: center; 
     z-index: 1;
-
+    align-items: center;
 }
 
 h1{
@@ -86,5 +89,7 @@ button {
     border: none;
     color: white;
     font-weight: bold;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
+    align-self: center;
+    border-radius: 40%;
 }

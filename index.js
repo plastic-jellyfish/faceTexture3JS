@@ -183,9 +183,9 @@ renderer.setClearColor(new THREE.Color('#000000'), 1)
 */
 gui.add(vibFreq, 'vibrato', 1, 10,1)
 gui.add(bgVol, 'BackVolume', 0, 1, .1)
-gui.add(camera.position, 'x').min(-3).max(3)
-gui.add(camera.position, 'y').min(-3).max(3)
-gui.add(camera.position, 'z').min(-3).max(3)
+// gui.add(camera.position, 'x').min(-3).max(3)
+// gui.add(camera.position, 'y').min(-3).max(3)
+// gui.add(camera.position, 'z').min(-3).max(3)
 // gui.add(vibFreq.position, 'y').min(-10).max(10)
 // gui.add(pointLight.position, 'z').min(-10).max(10)
 
