@@ -9,6 +9,7 @@ const gui = new dat.GUI()
 
  //gui controls
  gui.add(vibFreq, 'vibrato', 1, 10,1)
+ gui.add(bgVol, 'BackVolume', 0, 1, .1)
  // gui.add(vibFreq.position, 'y').min(-10).max(10)
  // gui.add(pointLight.position, 'z').min(-10).max(10)
 

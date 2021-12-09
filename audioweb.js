@@ -7,7 +7,7 @@ var randNote = Math.floor(Math.random()*10)
 var freq =  Math.floor((Math.random() * 1000) + 1); 
 var cut = audioContext.currentTime
 var vibFreq = {vibrato: 10}
-
+var bgVol = {BackVolume: .5}
 
 for(let i=0 ; i<buffer.length; i++){
     channelData[i]= Math.random() *2 -1
@@ -169,13 +169,13 @@ function playMelody(freq){
 
         const attackTime = 0.2
         const decayTime = 0.3
-        const sustainLevel = 0.5
+        const sustainLevel = bgVol.BackVolume * 0.7
         const releaseTime = 0.2
 
         const now = audioContext.currentTime
         const noteGain = audioContext.createGain()
         noteGain.gain.setValueAtTime(0,0)      
-        noteGain.gain.linearRampToValueAtTime(.7, now + attackTime)
+        noteGain.gain.linearRampToValueAtTime(bgVol.BackVolume, now + attackTime)
         noteGain.gain.linearRampToValueAtTime(sustainLevel, now + decayTime)
         noteGain.gain.setValueAtTime(sustainLevel, now+1 - releaseTime)
         noteGain.gain.linearRampToValueAtTime(0,now+5)
