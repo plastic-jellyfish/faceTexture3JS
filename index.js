@@ -5,6 +5,13 @@ import { OrbitControls } from 'https://cdn.skypack.dev/@three-ts/orbit-controls'
 const loader = new THREE.TextureLoader()
 const cross = loader.load('texture/cross.png')
 const slash = loader.load('texture/equal.png')
+const gui = new dat.GUI()
+
+ //gui controls
+ gui.add(vibFreq, 'vibrato', 1, 10,1)
+ // gui.add(vibFreq.position, 'y').min(-10).max(10)
+ // gui.add(pointLight.position, 'z').min(-10).max(10)
+
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -91,6 +98,11 @@ fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
 
     scene.add(mesh)
 
+
+    // const elapsedTime = clock.getElapsedTime()
+
+    mesh.rotation.y= .4
+
     // camera.position.z = 3
 })
 
@@ -105,13 +117,22 @@ fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
         const light2 = new THREE.PointLight(0x0000ff,10);
         light2.position.set(500,100,0);
         scene.add(light2);
-        const light3 = new THREE.PointLight(0x00ff00,10);
+        const light3 = new THREE.PointLight(0xff0000,10);
         light3.position.set(0,100,-500);
         scene.add(light3);
-        const light4 = new THREE.PointLight(0xff0000,10);
+        const light4 = new THREE.PointLight(0x00ff00,10);
         light4.position.set(-500,300,500);
         scene.add(light4);
 
+// gui.add(pointLight.position, 'x').min(-10).max(10)
+// gui.add(pointLight.position, 'y').min(-10).max(10)
+// gui.add(pointLight.position, 'z').min(-10).max(10)
+
+// const col = {color:'#00ff00'}
+// gui.addColor(col,'color').onChange(() => {
+//     light3.color.set(col.color)
+//     particlesMaterial.color.set(col.color)
+// })
 
 // const light = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 )
 // 	scene.add( light )
@@ -195,7 +216,7 @@ const tick = () =>
     particlesMesh.rotation.z = elapsedTime * -.1
     particlesMesh.rotation.y = elapsedTime * -.1
     particlesMesh.position.z = 1
-
+ 
     particlesMesh1.rotation.z = elapsedTime * .1
     particlesMesh1.rotation.y = elapsedTime * .1
     particlesMesh1.position.z = 1

@@ -20,23 +20,46 @@ body
     outline: none;
 }
 
-.container{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    color: white;
-    margin: 1em 2em;
+.parent{
+display: grid;
+grid-template-columns: 30vw 40vw 30vw;
+grid-template-rows: 20vh 50vh 30vh;
+justify-content: space-around;
+
+/* justify-items: center;
+align-items: center; */
 }
 
+.child{
+    /* border: 3px solid #333;
+    background-color: #dfdfdf;   */
+    /* align-self: center;
+    justify-self: center; */
+}
+
+.container{
+ margin: 2em 2em;
+ color: white;
+ align-self: left;
+ grid-column: span 2;
+ align-self: baseline;
+ z-index: 1;
+}
 .container1{
-    position: fixed;
-    top: 0;
-    left: 0;
+    grid-column: span 1;
+}
+.container2{
+    grid-row: span 2;
+}
+.container3{
+    grid-column: span 2;
+}
+.container4{
+    width: 300px;
+    align-self: center;
+    justify-self: center;
     z-index: 1;
-    color: white;
-    margin: 20em 2em;
-    align-items: center;
+
 }
 
 h1{
@@ -57,8 +80,8 @@ p{
 
 button {
     font-size: 1rem;
-    padding: .5em 1em;
-    margin-top: 3em;
+    padding: 1.2em 1.2em;
+    margin: .5em;
     background-color: rgb(0,114,255);
     border: none;
     color: white;

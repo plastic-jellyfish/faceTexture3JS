@@ -6,6 +6,7 @@ const channelData = buffer.getChannelData(0)
 var randNote = Math.floor(Math.random()*10)
 var freq =  Math.floor((Math.random() * 1000) + 1); 
 var cut = audioContext.currentTime
+var vibFreq = {vibrato: 10}
 
 
 for(let i=0 ; i<buffer.length; i++){
@@ -109,19 +110,18 @@ const notes= [
     {name:"C", frequency: 523.25}
 ]
 
-function playMelody(freq){
-// notes.forEach(({name,frequency}) => {
+notes.forEach(({name,frequency}) => {
     // const noteButton = document.createElement('button')
     // noteButton.innerText=name
-    // document.getElementById(notes[randNote].name).addEventListener("click", () => {
+    document.getElementById(name).addEventListener("click", () => {
         const noteOSC = audioContext.createOscillator()
-        noteOSC.frequency.setValueAtTime(freq, audioContext.currentTime)
-        noteOSC.type="square"
+        noteOSC.frequency.setValueAtTime(frequency, audioContext.currentTime)
+        noteOSC.type="sawtooth"
         // noteOSC.frequency.exponentialRampToValueAtTime(0.01, audioContext.currentTime + .5)
 
         const vibarato = audioContext.createOscillator()
-        vibarato.frequency.setValueAtTime(5,0)
-        // vibarato.type="square"
+        vibarato.frequency.setValueAtTime(vibFreq.vibrato  ,0)
+        vibarato.type="square"
         const vibaratoGain = audioContext.createGain()
         vibaratoGain.gain.setValueAtTime(10,0)
         vibarato.connect(vibaratoGain)
@@ -131,13 +131,51 @@ function playMelody(freq){
 
         const attackTime = 0.2
         const decayTime = 0.3
-        const sustainLevel = 0.3
+        const sustainLevel = 0.7
         const releaseTime = 0.2
 
         const now = audioContext.currentTime
         const noteGain = audioContext.createGain()
         noteGain.gain.setValueAtTime(0,0)      
-        noteGain.gain.linearRampToValueAtTime(.5, now + attackTime)
+        noteGain.gain.linearRampToValueAtTime(1, now + attackTime)
+        noteGain.gain.linearRampToValueAtTime(sustainLevel, now + decayTime)
+        noteGain.gain.setValueAtTime(sustainLevel, now+1 - releaseTime)
+        noteGain.gain.linearRampToValueAtTime(0,now+2)
+
+        noteOSC.connect(noteGain)
+        noteGain.connect(primaryGainControl)
+        noteOSC.start()
+        noteOSC.stop(now + 2)
+ 
+    })  
+    // document.body.appendChild(noteButton)
+})
+
+function playMelody(freq){
+        const noteOSC = audioContext.createOscillator()
+        noteOSC.frequency.setValueAtTime(freq, audioContext.currentTime)
+        noteOSC.type="sine"
+        // noteOSC.frequency.exponentialRampToValueAtTime(0.01, audioContext.currentTime + .5)
+
+        const vibarato = audioContext.createOscillator()
+        vibarato.frequency.setValueAtTime(10,0)
+        // vibarato.type="square"
+        const vibaratoGain = audioContext.createGain()
+        vibaratoGain.gain.setValueAtTime(5,0)
+        vibarato.connect(vibaratoGain)
+        vibaratoGain.connect(noteOSC.frequency)
+        // vibaratoGain.connect(vibaratoGain.gain)
+        vibarato.start()
+
+        const attackTime = 0.2
+        const decayTime = 0.3
+        const sustainLevel = 0.5
+        const releaseTime = 0.2
+
+        const now = audioContext.currentTime
+        const noteGain = audioContext.createGain()
+        noteGain.gain.setValueAtTime(0,0)      
+        noteGain.gain.linearRampToValueAtTime(.7, now + attackTime)
         noteGain.gain.linearRampToValueAtTime(sustainLevel, now + decayTime)
         noteGain.gain.setValueAtTime(sustainLevel, now+1 - releaseTime)
         noteGain.gain.linearRampToValueAtTime(0,now+5)
@@ -146,15 +184,11 @@ function playMelody(freq){
         noteGain.connect(primaryGainControl)
         noteOSC.start()
         noteOSC.stop(now + 10)
- 
-    // })  
-    // document.body.appendChild(noteButton)
-// })
-}
+ }
 
 const loop = () => {
     if (audioContext.currentTime - cut > (Math.random()+1.5)){
-        freq =  Math.floor((Math.random() * 500) + 100); 
+        freq =  Math.floor((Math.random() * 300) + 100); 
         cut = audioContext.currentTime
         playMelody(freq)
         // console.log(freq)
