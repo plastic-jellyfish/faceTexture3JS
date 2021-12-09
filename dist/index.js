@@ -71,7 +71,7 @@ line.material.transparent = true;
 
 scene.add( line );
 
-line.position.y =1.25    
+line.position.y =1.75    
 line.rotation.x =90
 
 // Mesh
@@ -97,13 +97,9 @@ fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
     }
 
     scene.add(mesh)
-
-
-    // const elapsedTime = clock.getElapsedTime()
-
-    mesh.rotation.y= .4
-
-    // camera.position.z = 3
+   
+    // mesh.rotation.y= .4
+    mesh.position.y= .5
 })
 
 
@@ -141,14 +137,14 @@ fetch("texture/instances.json").then(r => r.json()).then(instanceData => {
  */
 const sizes = {
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight 
 }
 
 window.addEventListener('resize', () =>
 {
     // Update sizes
     sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+    sizes.height = window.innerHeight 
 
     // Update camera
     camera.aspect = sizes.width / sizes.height
@@ -163,7 +159,7 @@ window.addEventListener('resize', () =>
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 4000)
+const camera = new THREE.PerspectiveCamera(90, sizes.width / sizes.height, 0.1, 4000)
 camera.position.x = 0
 camera.position.y = 0
 camera.position.z = 3
@@ -177,7 +173,8 @@ controls.enableDamping = true
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    alpha: true
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))

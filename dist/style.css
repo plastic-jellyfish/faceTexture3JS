@@ -23,7 +23,7 @@ body
 .parent{
 display: grid;
 grid-template-columns: 30vw 40vw 30vw;
-grid-template-rows: 20vh 50vh 30vh;
+grid-template-rows: 20vh 40vh 40vh;
 justify-content: space-around;
 
 /* justify-items: center;
@@ -56,8 +56,8 @@ align-items: center; */
 }
 .container4{
     width: 300px;
-    align-self: center;
-    justify-self: center;
+     /* align-self: center; */
+    justify-self: center; 
     z-index: 1;
 
 }
