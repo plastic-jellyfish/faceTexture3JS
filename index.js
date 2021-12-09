@@ -7,13 +7,6 @@ const cross = loader.load('texture/cross.png')
 const slash = loader.load('texture/equal.png')
 const gui = new dat.GUI()
 
- //gui controls
- gui.add(vibFreq, 'vibrato', 1, 10,1)
- gui.add(bgVol, 'BackVolume', 0, 1, .1)
- // gui.add(vibFreq.position, 'y').min(-10).max(10)
- // gui.add(pointLight.position, 'z').min(-10).max(10)
-
-
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -169,6 +162,8 @@ scene.add(camera)
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+controls.autoRotate = true
+controls.autoRotateSpeed = .1
 
 /**
  * Renderer
@@ -182,6 +177,29 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor(new THREE.Color('#000000'), 1)
 // renderer.shadowMap.enabled = true
 // renderer.gammaOutput = true
+
+/**
+//gui controls
+*/
+gui.add(vibFreq, 'vibrato', 1, 10,1)
+gui.add(bgVol, 'BackVolume', 0, 1, .1)
+gui.add(camera.position, 'x').min(-3).max(3)
+gui.add(camera.position, 'y').min(-3).max(3)
+gui.add(camera.position, 'z').min(-3).max(3)
+// gui.add(vibFreq.position, 'y').min(-10).max(10)
+// gui.add(pointLight.position, 'z').min(-10).max(10)
+
+notes.forEach(({name,frequency}) => {
+    document.getElementById(name).addEventListener("click", () => {
+        camera.position.set( 
+            ((Math.random()*4) - 2), 
+            ((Math.random()*4) - 2),
+            ((Math.random()*4) - 2) + 3
+            )
+    })
+})
+
+
 
 /**
  * Animate
@@ -233,6 +251,7 @@ const tick = () =>
 
     // Update Orbital Controls
     controls.update()
+    // controls.reset()
 
     // Render
     renderer.render(scene, camera)

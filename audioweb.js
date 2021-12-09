@@ -6,7 +6,7 @@ const channelData = buffer.getChannelData(0)
 var randNote = Math.floor(Math.random()*10)
 var freq =  Math.floor((Math.random() * 1000) + 1); 
 var cut = audioContext.currentTime
-var vibFreq = {vibrato: 10}
+var vibFreq = {vibrato: 4}
 var bgVol = {BackVolume: .5}
 
 for(let i=0 ; i<buffer.length; i++){
