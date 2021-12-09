@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "gh-pages": "^3.2.3"
+  },
+  "devDependencies": {
+    "dat.gui": "^0.7.7"
   }
 }
