@@ -52,13 +52,13 @@ body
 }
 
 .container2{
-    background-color:rgba(27, 27, 27, 0.3);
-    padding: .7em;
+    /* background-color:rgba(27, 27, 27, 0.2); */
+    /* padding: .7em; */
     grid-column: span 3;
     justify-self: center; 
     /* align-self: center; */
     z-index: 1;
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 
 .container3{
