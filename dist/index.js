@@ -189,8 +189,18 @@ gui.add(bgVol, 'BackVolume', 0, 1, .1)
 // gui.add(vibFreq.position, 'y').min(-10).max(10)
 // gui.add(pointLight.position, 'z').min(-10).max(10)
 
-notes.forEach(({name,frequency}) => {
-    document.getElementById(name).addEventListener("click", () => {
+// notes.forEach(({name,frequency}) => {
+    // document.getElementById().addEventListener("click", () => {
+    //     camera.position.set( 
+    //         ((Math.random()*4) - 2), 
+    //         ((Math.random()*4) - 2),
+    //         ((Math.random()*4) - 2) + 3
+    //         )
+    // })
+// })
+
+keys.forEach(key => {
+    key.addEventListener('click', () => {
         camera.position.set( 
             ((Math.random()*4) - 2), 
             ((Math.random()*4) - 2),
@@ -198,6 +208,22 @@ notes.forEach(({name,frequency}) => {
             )
     })
 })
+
+playButton.addEventListener('click', () => {
+    if(playButton.classList.contains('show')){
+        if (songNotes.length === 0) return
+        songNotes.forEach(note =>{
+            setTimeout(() => {
+                camera.position.set( 
+                    ((Math.random()*4) - 2), 
+                    ((Math.random()*4) - 2),
+                    ((Math.random()*4) - 2) + 3
+                    )
+            }, note.startTime)
+        })
+    }
+})
+
 
 
 
